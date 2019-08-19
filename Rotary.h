@@ -8,10 +8,7 @@
 #include "Arduino.h"
 
 // Enable this to emit codes twice per step.
-//#define HALF_STEP
-
-// Enable weak pullups
-#define ENABLE_PULLUPS
+// #define HALF_STEP
 
 // Values returned by 'process'
 // No complete step yet.
@@ -24,14 +21,13 @@
 class Rotary
 {
   public:
-    Rotary(char, char);
-    // Process pin(s)
-    unsigned char process();
+    Rotary(byte pin1, byte pin2);
+    byte process();
   private:
-    unsigned char state;
-    unsigned char pin1;
-    unsigned char pin2;
+    byte _state;
+    byte _pin1;
+    byte _pin2;
 };
 
 #endif
- 
+

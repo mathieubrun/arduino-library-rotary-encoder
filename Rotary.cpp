@@ -1,4 +1,4 @@
-/* Rotary encoder handler for arduino. v1.1
+/* Rotary encoder handler for arduino.
  *
  * Copyright 2011 Ben Buxton. Licenced under the GNU GPL Version 3.
  * Contact: bb@cactii.net
@@ -123,26 +123,20 @@ const unsigned char ttable[7][4] = {
 /*
  * Constructor. Each arg is the pin number for each encoder contact.
  */
-Rotary::Rotary(char _pin1, char _pin2) {
+Rotary::Rotary(byte pin1, byte pin2) {
   // Assign variables.
-  pin1 = _pin1;
-  pin2 = _pin2;
-  // Set pins to input.
-  pinMode(pin1, INPUT);
-  pinMode(pin2, INPUT);
-#ifdef ENABLE_PULLUPS
-  digitalWrite(pin1, HIGH);
-  digitalWrite(pin2, HIGH);
-#endif
+  _pin1 = pin1;
+  _pin2 = pin2;
+
   // Initialise state.
-  state = R_START;
+  _state = R_START;
 }
 
-unsigned char Rotary::process() {
+byte Rotary::process() {
   // Grab state of input pins.
-  unsigned char pinstate = (digitalRead(pin2) << 1) | digitalRead(pin1);
+  byte pinstate = (digitalRead(_pin2) << 1) | digitalRead(_pin1);
   // Determine new state from the pins and state table.
-  state = ttable[state & 0xf][pinstate];
+  _state = ttable[_state & 0xf][pinstate];
   // Return emit bits, ie the generated event.
-  return state & 0x30;
+  return _state & 0x30;
 }
